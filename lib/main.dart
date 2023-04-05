@@ -9,13 +9,12 @@ void main() {
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
-        primaryColor: const Color(0xFF272b31),
+        primarySwatch: Colors.blue,
       ),
       home: const MyHomePage(title: 'Personagens do Star Wars'),
     );
@@ -24,7 +23,6 @@ class MyApp extends StatelessWidget {
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key, required this.title});
-
   final String title;
 
   @override
@@ -36,7 +34,7 @@ class _MyHomePageState extends State<MyHomePage> {
   List<String> starWarsCharactersName = [];
   bool isLoading = false;
 
-  void _translateText() async {
+  void getSWCharacters() async {
     setState(() {
       starWarsCharactersName.clear();
       isLoading = true;
@@ -63,7 +61,7 @@ class _MyHomePageState extends State<MyHomePage> {
         child: Column(
           children: <Widget>[
             const Text(
-              'Meu personagem preferido do Star Wars é:',
+              'Meus personagens preferidos do StarWars são:',
             ),
             const SizedBox(height: 16.0),
             if (starWarsCharactersName.isEmpty && !isLoading)
@@ -76,9 +74,8 @@ class _MyHomePageState extends State<MyHomePage> {
               )
             else if (starWarsCharactersName.isEmpty && isLoading)
               const Padding(
-                padding: EdgeInsets.all(8.0),
-                child: CircularProgressIndicator(),
-              )
+                  padding: EdgeInsets.all(16.0),
+                  child: CircularProgressIndicator())
             else
               for (final c in starWarsCharactersName) Text(c),
           ],
@@ -86,7 +83,7 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          _translateText();
+          getSWCharacters();
         },
         tooltip: 'Buscar',
         child: const Icon(Icons.local_fire_department),
